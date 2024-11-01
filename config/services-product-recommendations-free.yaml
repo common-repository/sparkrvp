@@ -1,0 +1,41 @@
+parameters:
+  plugin.isPro: true
+
+services:
+  _instanceof:
+    Sparkrvp\SparkPlugins\SparkWoo\Common\Modules\ModuleInterface:
+      tags: ["app.module"]
+    Sparkrvp\SparkPlugins\SparkWoo\Common\Activation\ActivationHookInterface:
+      tags: ["app.activation"]
+    Sparkrvp\SparkPlugins\SparkWoo\Common\Activation\DeactivationHookInterface:
+      tags: ["app.deactivation"]
+    Sparkrvp\SparkPlugins\SparkWoo\Common\Models\PostModelInterface:
+      tags: ["app.postType"]
+    Sparkrvp\SparkPlugins\SparkWoo\Common\Options\OptionInterface:
+      tags: ["app.option"]
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+    bind:
+      $pluginMeta: "@plugin-meta"
+  dismissed-revenue-upgrade-notification-option:
+    class: Sparkrvp\SparkPlugins\SparkWoo\Common\Options\StringOption
+    arguments:
+      $prefix: "%plugin.prefix%"
+      $name: dismissed_revenue_upgrade_notification
+  Sparkrvp\SparkPlugins\SparkWoo\ProductRecommendationsFree\Analytics\ThresholdRevenueUpgradeNotificationModule:
+    arguments:
+      $notificationModule: '@Sparkrvp\SparkPlugins\SparkWoo\Common\Notifications\NotificationModule'
+      $dismissedOptionMonthly: "@dismissed-revenue-upgrade-notification-option"
+      $revenueThreshold: "%notifications.revenueThreshold%"
+      $eventRepository: '@Sparkrvp\SparkPlugins\SparkWoo\ProductRecommendations\Analytics\AnalyticsEventRepository'
+  # shortcode-removed-notification-option:
+  #   class: Sparkrvp\SparkPlugins\SparkWoo\Common\Options\BooleanOption
+  #   arguments:
+  #     $prefix: "%plugin.prefix%"
+  #     $name: dismissed_shortcode_removed_notification
+  # Sparkrvp\SparkPlugins\SparkWoo\ProductRecommendationsFree\Shortcodes\RemoveShortcodeFromFreeModule:
+  #   arguments:
+  #     $productsManager: "@products-manager"
+  #     $shortcodeRemovedNotifictionOption: "@shortcode-removed-notification-option"

@@ -1,0 +1,27 @@
+parameters:
+  product.manager.slug: "%productsManager.sparkrvp.slug%"
+  product.manager.title: "%productsManager.sparkrvp.title%"
+  product.manager.description: "%productsManager.sparkrvp.description%"
+  product.manager.shortcode: "%productsManager.sparkrvp.shortcode%"
+
+services:
+  _instanceof:
+    Sparkrvp\SparkPlugins\SparkWoo\Common\Modules\ModuleInterface:
+      tags: ["app.module"]
+    Sparkrvp\SparkPlugins\SparkWoo\Common\Migrations\MigrationInterface:
+      tags: ["app.migration"]
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+    bind:
+      $cookieName: "%sparkrvp.cookie.name%"
+  products-manager:
+    class: Sparkrvp\SparkPlugins\SparkWoo\RecentlyViewedProducts\RecentlyViewedProductsManager
+    arguments:
+      $title: "%product.manager.title%"
+      $slug: "%product.manager.slug%"
+      $description: "%product.manager.description%"
+      $shortcode: "%product.manager.shortcode%"
+      $cacheManager: '@Sparkrvp\SparkPlugins\SparkWoo\Common\Cache\CacheManager'
+  Sparkrvp\SparkPlugins\SparkWoo\RecentlyViewedProducts\Migrations\UniqueIdsToHistoryMigration:

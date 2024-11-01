@@ -1,0 +1,14 @@
+parameters:
+  plugin.prefix: "%plugin.sparkrvp.prefix%"
+  plugin.slug: "%plugin.sparkrvp.slug%"
+  plugin.version: "%plugin.sparkrvp.version%"
+
+services:
+  plugin-meta: "@plugin-meta-rvp"
+
+imports:
+  - { resource: services-common.yaml }
+  - { resource: services-common-free.yaml }
+  - { resource: services-product-recommendations.yaml }
+  - { resource: services-product-recommendations-free.yaml }
+  - { resource: services-sparkrvp-base.yaml }
